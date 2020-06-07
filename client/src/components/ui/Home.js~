@@ -1,0 +1,40 @@
+import React from 'react';
+import Card from "./Card";
+import Filter from "./Filter";
+
+export default class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: []
+        }
+    }
+
+    async componentDidMount() {
+        var self = this;
+        var response = await fetch('http://localhost:8080/api/tasks', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        response.json().then((json) => {
+            self.setState({
+                tasks : json
+            })
+        })
+    }
+
+    render() {
+        return(
+            <div>
+                <div className={'col-sm-6 col-sm-offset-3'}>
+                    {this.state.tasks.map((task, index) =>
+                        <Card key={index} data={task}/>
+                    )}
+                    <Filter func={this.props}/>
+                </div>
+            </div>
+        )
+    }
+}
