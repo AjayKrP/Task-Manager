@@ -72,8 +72,11 @@ exports.findOne = (req, res) => {
 // TODO delete only if none task is processing by the current server
 exports.delete = (req, res) => {
     const id = req.params.id;
-    Task.count().then(c => {
-        if (c === 0) {
+    Task.findAll({
+        where: { serverId: id }
+    }).then(c => {
+        console.log(c)
+        if (c.length === 0) {
             Server.destroy({
                 where: { id: id }
             })
