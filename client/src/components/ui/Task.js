@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Server extends React.Component {
+export default class Task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
